@@ -19,8 +19,9 @@ header {
 }
 
 .logo {
-    width: 150px;
-    margin-bottom: 10px;
+    width: 160px;
+    display: block;
+    margin: 0 auto 10px;
 }
 
 .container {
@@ -43,9 +44,9 @@ header {
     box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 }
 
-input {
-    padding: 8px;
+.product input {
     margin-top: 10px;
+    padding: 5px;
     width: 60px;
 }
 
@@ -58,7 +59,8 @@ form {
 
 input[type=text], input[type=email], input[type=tel] {
     width: 100%;
-    margin: 8px 0;
+    padding: 8px;
+    margin: 6px 0;
 }
 
 button {
@@ -68,29 +70,32 @@ button {
     border: none;
     width: 100%;
     border-radius: 8px;
-    cursor: pointer;
     font-weight: bold;
+    cursor: pointer;
 }
 
 button:hover {
     background: #e52e5c;
 }
 </style>
-</head>
 
+</head>
 <body>
 
 <header>
-    <!-- ✅ LOGO -->
-    logo.png
+
+    <!-- ✅ LOGO SPRÁVNĚ -->
+    <img src="logo.png" alt="GlowBite logo" class="logo">
 
     <h1>GlowBite</h1>
     <p>Student Food Co.</p>
+
 </header>
 
 <div class="container">
 
 <h2>🍔 Produkty</h2>
+
 <div class="products" id="products"></div>
 
 <form onsubmit="odeslat(event)">
@@ -104,7 +109,8 @@ button:hover {
 <p>Kusů: <span id="kusy">0</span></p>
 <p>Cena: <span id="cena">0</span> Kč</p>
 
-<button>ODESLAT OBJEDNÁVKU</button>
+<button type="submit">ODESLAT OBJEDNÁVKU</button>
+
 </form>
 
 </div>
@@ -153,6 +159,7 @@ function odeslat(e){
     e.preventDefault();
 
     let text = "";
+
     produkty.forEach(x=>{
         if(x.kusy > 0){
             text += x.nazev + " (" + x.kusy + " ks)\n";
@@ -166,21 +173,18 @@ function odeslat(e){
     const cena = document.getElementById("cena").innerText;
 
     let zprava =
-`Jméno: ${jmeno} ${prijmeni}
-Email: ${email}
-Telefon: ${telefon}
+"Jméno: " + jmeno + " " + prijmeni + "\n" +
+"Email: " + email + "\n" +
+"Telefon: " + telefon + "\n\n" +
+"Objednávka:\n" + text + "\n" +
+"Celková cena: " + cena + " Kč";
 
-Objednávka:
-${text}
-
-Celková cena: ${cena} Kč`;
-
-    // ✅ KÓDOVÁNÍ (opravuje diakritiku)
-    let body = encodeURIComponent(zprava);
+    // ✅ DŮLEŽITÉ – oprava češtiny
     let subject = encodeURIComponent("Objednávka GlowBite");
+    let body = encodeURIComponent(zprava);
 
     window.location.href =
-    `mailto:app@kostka-skola.cz?subject=${subject}&body=${body}`;
+    "mailto:app@kostka-skola.cz?subject=" + subject + "&body=" + body;
 }
 
 zobraz();
